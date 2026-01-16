@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { DocumentsTable } from '@/components/documents/DocumentsTable';
-import { mockDocuments } from '@/data/mockData';
+import { NewDocumentDialog } from '@/components/documents/NewDocumentDialog';
+import { useDocuments, CreateDocumentData } from '@/hooks/useDocuments';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -11,15 +12,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Plus, Search, Filter, Download } from 'lucide-react';
-import { Document, DocumentStatus, DocumentLevel } from '@/types/qms';
+import { Plus, Search, Filter, Download, Loader2 } from 'lucide-react';
+import { DocumentStatus, DocumentLevel } from '@/types/qms';
 
 export default function Documents() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [levelFilter, setLevelFilter] = useState<string>('all');
+  const [isNewDocOpen, setIsNewDocOpen] = useState(false);
+  
+  const { documents, loading, createDocument } = useDocuments();
 
-  const filteredDocuments = mockDocuments.filter((doc) => {
+  const filteredDocuments = documents.filter((doc) => {
     const matchesSearch =
       doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       doc.document_number.toLowerCase().includes(searchQuery.toLowerCase());
@@ -28,13 +32,17 @@ export default function Documents() {
     return matchesSearch && matchesStatus && matchesLevel;
   });
 
-  const statusCounts = mockDocuments.reduce(
+  const statusCounts = documents.reduce(
     (acc, doc) => {
       acc[doc.status] = (acc[doc.status] || 0) + 1;
       return acc;
     },
     {} as Record<string, number>
   );
+
+  const handleCreateDocument = async (data: CreateDocumentData) => {
+    await createDocument(data);
+  };
 
   return (
     <MainLayout
@@ -96,7 +104,7 @@ export default function Documents() {
               <Download className="mr-2 h-4 w-4" />
               Export
             </Button>
-            <Button>
+            <Button onClick={() => setIsNewDocOpen(true)}>
               <Plus className="mr-2 h-4 w-4" />
               New Document
             </Button>
@@ -104,12 +112,19 @@ export default function Documents() {
         </div>
 
         {/* Documents Table */}
-        <DocumentsTable
-          documents={filteredDocuments}
-          onView={(doc) => console.log('View', doc)}
-          onEdit={(doc) => console.log('Edit', doc)}
-        />
+        {loading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          </div>
+        ) : (
+          <DocumentsTable
+            documents={filteredDocuments}
+            onView={(doc) => console.log('View', doc)}
+            onEdit={(doc) => console.log('Edit', doc)}
+          />
+        )}
 
+        {/* ISO Reference */}
         {/* ISO Reference */}
         <div className="rounded-lg border border-border bg-card p-4">
           <h4 className="text-sm font-medium text-foreground">ISO 9001:2015 Reference</h4>
@@ -119,6 +134,12 @@ export default function Documents() {
           </p>
         </div>
       </div>
+
+      <NewDocumentDialog
+        open={isNewDocOpen}
+        onOpenChange={setIsNewDocOpen}
+        onSubmit={handleCreateDocument}
+      />
     </MainLayout>
   );
 }
