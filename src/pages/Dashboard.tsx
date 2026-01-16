@@ -129,7 +129,7 @@ export default function Dashboard() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-foreground">{doc.title}</p>
-                      <p className="font-mono text-xs text-muted-foreground">{doc.documentNumber}</p>
+                      <p className="font-mono text-xs text-muted-foreground">{doc.document_number}</p>
                     </div>
                   </div>
                   <StatusBadge status={doc.status} size="sm" />
@@ -161,13 +161,13 @@ export default function Dashboard() {
                       )}
                       <span className="text-sm font-medium text-foreground">{capa.title}</span>
                     </div>
-                    <span className="font-mono text-xs text-muted-foreground">{capa.id}</span>
+                    <span className="font-mono text-xs text-muted-foreground">{capa.capa_number}</span>
                   </div>
                   <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
-                    <span>Assigned: {capa.assignedTo}</span>
+                    <span>Assigned: {capa.assigned_to || 'Unassigned'}</span>
                     <span className="flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
-                      Due: {format(capa.dueDate, 'MMM dd, yyyy')}
+                      Due: {format(new Date(capa.due_date), 'MMM dd, yyyy')}
                     </span>
                   </div>
                 </div>

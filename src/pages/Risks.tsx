@@ -96,12 +96,12 @@ export default function Risks() {
                       </span>
                     </td>
                     <td>
-                      <span className="font-mono text-lg font-bold">{risk.riskScore}</span>
+                      <span className="font-mono text-lg font-bold">{risk.risk_score}</span>
                       <span className="text-xs text-muted-foreground ml-1">
                         ({risk.likelihood}×{risk.impact})
                       </span>
                     </td>
-                    <td>{risk.owner}</td>
+                    <td>{risk.owner_id || 'Unassigned'}</td>
                     <td>
                       <span className="capitalize text-sm">{risk.status}</span>
                     </td>
@@ -135,7 +135,7 @@ export default function Risks() {
                     ) : (
                       <CheckCircle2 className="h-4 w-4 text-status-approved" />
                     )}
-                    <span className="font-mono text-xs text-muted-foreground">{capa.id}</span>
+                    <span className="font-mono text-xs text-muted-foreground">{capa.capa_number}</span>
                   </div>
                   <span className={cn('status-badge', capaStatusConfig[capa.status].className)}>
                     {capaStatusConfig[capa.status].label}
@@ -149,11 +149,11 @@ export default function Risks() {
 
                 <div className="mt-4 flex items-center justify-between border-t border-border pt-3">
                   <span className="text-xs text-muted-foreground">
-                    Assigned: {capa.assignedTo}
+                    Assigned: {capa.assigned_to || 'Unassigned'}
                   </span>
                   <span className="flex items-center gap-1 text-xs text-muted-foreground">
                     <Clock className="h-3 w-3" />
-                    {format(capa.dueDate, 'MMM dd, yyyy')}
+                    {format(new Date(capa.due_date), 'MMM dd, yyyy')}
                   </span>
                 </div>
               </div>

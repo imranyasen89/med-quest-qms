@@ -25,7 +25,7 @@ export default function Instruments() {
   const filteredInstruments = mockInstruments.filter((instrument) => {
     const matchesSearch =
       instrument.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      instrument.assetCode.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      instrument.asset_code.toLowerCase().includes(searchQuery.toLowerCase()) ||
       instrument.manufacturer.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesDepartment = departmentFilter === 'all' || instrument.department === departmentFilter;
     const matchesStatus = statusFilter === 'all' || instrument.status === statusFilter;

@@ -42,7 +42,7 @@ export function DocumentsTable({ documents, onView, onEdit }: DocumentsTableProp
                   </div>
                   <div>
                     <p className="font-medium text-foreground">{doc.title}</p>
-                    <p className="font-mono text-xs text-muted-foreground">{doc.documentNumber}</p>
+                    <p className="font-mono text-xs text-muted-foreground">{doc.document_number}</p>
                   </div>
                 </div>
               </td>
@@ -60,19 +60,19 @@ export function DocumentsTable({ documents, onView, onEdit }: DocumentsTableProp
               </td>
               <td>
                 <span className="text-sm text-muted-foreground">
-                  {format(doc.updatedAt, 'MMM dd, yyyy')}
+                  {format(new Date(doc.updated_at), 'MMM dd, yyyy')}
                 </span>
               </td>
               <td>
-                {doc.isoClause && doc.isoClause.length > 0 && (
+                {doc.iso_clauses && doc.iso_clauses.length > 0 && (
                   <div className="flex flex-wrap gap-1">
-                    {doc.isoClause.slice(0, 2).map((clause) => (
+                    {doc.iso_clauses.slice(0, 2).map((clause) => (
                       <span key={clause} className="iso-clause">
                         {clause}
                       </span>
                     ))}
-                    {doc.isoClause.length > 2 && (
-                      <span className="iso-clause">+{doc.isoClause.length - 2}</span>
+                    {doc.iso_clauses.length > 2 && (
+                      <span className="iso-clause">+{doc.iso_clauses.length - 2}</span>
                     )}
                   </div>
                 )}
