@@ -22,7 +22,7 @@ export default function Documents() {
   const filteredDocuments = mockDocuments.filter((doc) => {
     const matchesSearch =
       doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      doc.documentNumber.toLowerCase().includes(searchQuery.toLowerCase());
+      doc.document_number.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = statusFilter === 'all' || doc.status === statusFilter;
     const matchesLevel = levelFilter === 'all' || doc.level === levelFilter;
     return matchesSearch && matchesStatus && matchesLevel;

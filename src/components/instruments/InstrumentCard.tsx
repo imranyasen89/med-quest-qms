@@ -35,7 +35,7 @@ export function InstrumentCard({ instrument, onClick }: InstrumentCardProps) {
   const StatusIcon = status.icon;
 
   const isCalibrationDue =
-    instrument.calibrationDueDate && new Date(instrument.calibrationDueDate) <= new Date();
+    instrument.calibration_due_date && new Date(instrument.calibration_due_date) <= new Date();
 
   return (
     <div
@@ -49,7 +49,7 @@ export function InstrumentCard({ instrument, onClick }: InstrumentCardProps) {
           </div>
           <div>
             <h3 className="font-semibold text-foreground">{instrument.name}</h3>
-            <p className="font-mono text-xs text-muted-foreground">{instrument.assetCode}</p>
+            <p className="font-mono text-xs text-muted-foreground">{instrument.asset_code}</p>
           </div>
         </div>
         <span className={cn('status-badge', criticality.className)}>{criticality.label}</span>
@@ -73,7 +73,7 @@ export function InstrumentCard({ instrument, onClick }: InstrumentCardProps) {
           <span className="text-sm font-medium">{status.label}</span>
         </div>
 
-        {instrument.calibrationDueDate && (
+        {instrument.calibration_due_date && (
           <div
             className={cn(
               'flex items-center gap-1.5 text-sm',
@@ -82,7 +82,7 @@ export function InstrumentCard({ instrument, onClick }: InstrumentCardProps) {
           >
             <Calendar className="h-4 w-4" />
             <span>
-              Cal: {format(instrument.calibrationDueDate, 'MMM dd')}
+              Cal: {format(new Date(instrument.calibration_due_date), 'MMM dd')}
             </span>
             {isCalibrationDue && <AlertCircle className="h-4 w-4" />}
           </div>

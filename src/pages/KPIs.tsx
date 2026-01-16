@@ -15,7 +15,7 @@ export default function KPIs() {
   const getKPIsByCategory = (category: KPICategory) =>
     mockKPIs.filter((kpi) => kpi.category === category);
 
-  const onTargetCount = mockKPIs.filter((kpi) => kpi.current >= kpi.target).length;
+  const onTargetCount = mockKPIs.filter((kpi) => kpi.current_value >= kpi.target).length;
 
   return (
     <MainLayout

@@ -7,8 +7,8 @@ interface KPICardProps {
 }
 
 export function KPICard({ kpi }: KPICardProps) {
-  const isOnTarget = kpi.target <= kpi.current;
-  const percentage = Math.min((kpi.current / kpi.target) * 100, 100);
+  const isOnTarget = kpi.target <= kpi.current_value;
+  const percentage = Math.min((kpi.current_value / kpi.target) * 100, 100);
 
   const TrendIcon = kpi.trend === 'up' ? TrendingUp : kpi.trend === 'down' ? TrendingDown : Minus;
   const trendColor =
@@ -21,7 +21,7 @@ export function KPICard({ kpi }: KPICardProps) {
           <p className="text-sm font-medium text-muted-foreground">{kpi.name}</p>
           <div className="mt-1 flex items-baseline gap-2">
             <span className="text-2xl font-bold text-foreground">
-              {kpi.current}
+              {kpi.current_value}
               <span className="text-sm font-normal text-muted-foreground">{kpi.unit}</span>
             </span>
           </div>
@@ -52,9 +52,9 @@ export function KPICard({ kpi }: KPICardProps) {
         </div>
       </div>
 
-      {kpi.isoClause && (
+      {kpi.iso_clause && (
         <div className="mt-3 flex justify-end">
-          <span className="iso-clause">{kpi.isoClause}</span>
+          <span className="iso-clause">{kpi.iso_clause}</span>
         </div>
       )}
     </div>
